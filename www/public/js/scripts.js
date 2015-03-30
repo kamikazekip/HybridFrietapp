@@ -56,8 +56,8 @@ var orderDetails = [
 $(document).ready(function(){
 	loadDishes();
 	
-	$("#select-products-order").change(function(){
-		var scopeDish = $(this).val();
+	$("#placeOrderButton").on("tap", function(){
+		var scopeDish = $("#select-products-order").val();
 		console.log(scopeDish);
 		var scopeData = {
 			"dish" : scopeDish
@@ -138,15 +138,13 @@ $(document).on('pagebeforeshow', '#popupOrderProducts', function(){
 
 // Een bestelling bekijken.
 $(document).on('click','.group-btn-order', function() {	
-
+	var title = $(this).html();
 	var orderId = $(this).data("id")
 	if(orderId !== globalSelectedOrder){
-		console.log("removing order view");
 		$('#order-table-orders tbody').empty();
-		console.log(orderId +" != "+ globalSelectedOrder);
 		globalSelectedOrder = orderId;
-
-		// Groeps informatie ophalen
+		$("#order-title-name").html(title);
+		//Groeps informatie ophalen
 		
 		$.ajax( {
 			url : 'http://localhost:8000/orders/'+globalSelectedOrder+'/dishes',
