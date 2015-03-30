@@ -4,7 +4,6 @@ $(document).on('click','#group-button-place-order', function() {
 })
 
 $(document).on('click','#group-button-order', function() {
-	console.log(" !!!!!!!!!!!!!_______________---------------------");
 	$.mobile.changePage("#page-newOrder", {transition : "slideup"});
 })
 
@@ -13,7 +12,7 @@ function newOrder(){
 	var r = confirm("Nieuwe bestelling halen ?");
 	if (r == true) {
 	    $.ajax( {
-				url : 'http://localhost:8000/groups/'+globalSelectedGroup+"/order",
+				url : globalServerUrl + '/groups/'+globalSelectedGroup+"/order",
 				dataType : 'json',
 				type : "Post",
 				beforeSend : function(xhr) {
@@ -36,9 +35,8 @@ function newOrder(){
 					
 				},
 				success : function(model) {
-					console.log(model);
 					$('#group-list-orders').append('<button class="ui-btn  group-btn-order group-btn-order-active" data-id="'+model.order._id+'">'+ readAbleDate(model.order.date) +' - '+ model.order.creator+'</button>');	
-					console.log('Order gemaakt');
+					$.mobile.changePage("#page-group", {transition : "slideup"});
 				}
 			});
 	} 
@@ -54,12 +52,9 @@ function loadOrders(){
 
 // Het juiste gerecht krijgen
 function getDish(dishId){
-	console.log("Searching for dish in dishes "+dishId+ " .......");
 	for(x = 0; x < dishes.length; x++) {
-		console.log(x + " - "+ dishes.length);
 		if(dishes[x].id === dishId)
 		{
-			console.log("Found dish " + dishes[x].name );
 			return dishes[x];
 
 		}
@@ -69,14 +64,10 @@ function getDish(dishId){
 
 
 function getOrders(groupId){
-	console.log();
 	var returnArray = [];
-	console.log("Searching for orders in group "+groupId+ " .......");
 	for(i = 0; i < orders.length; i++) {
-		if(orders[i].groups_id === groupId)
-		{
+		if(orders[i].groups_id === groupId){
 			returnArray.push(orders[i]);
-			console.log("Found an order for group  "+ groupId);
 		}
 	}
 	return returnArray;
@@ -84,11 +75,9 @@ function getOrders(groupId){
 }
 
 function getOrder(orderId){
-	console.log("Searching for Order : "+orderId+ " .......");
 	for(i = 0; i < orders.length; i++) {
 		if(orders[i].id === orderId)
 		{
-			console.log("Order found ------------- "+orders[i].name);
 			return orders[i];
 		}
 	}
@@ -98,12 +87,9 @@ function getOrder(orderId){
 // Functie om de bestellins inhoud in te laden uit de json array orderDetails
 function getOrderDetails(orderId){
 	var returnArray = [];
-	console.log("Searching for orderDetails in Order "+orderId+ " .......");
 	for(i = 0; i < orderDetails.length; i++) {
-		if(orderDetails[i].orders_id === orderId)
-		{
+		if(orderDetails[i].orders_id === orderId){
 			returnArray.push(orderDetails[i]);
-			console.log("Found");
 		}
 	}
 	return returnArray;
@@ -111,11 +97,7 @@ function getOrderDetails(orderId){
 
 function placeOrder(){
 	$('.popupOrderProducts-product').each(function(i, obj) {
-			console.log("-------------!!!!!!!!!!----");
-		    	console.log(obj);
-		    //console.log($(obj).data("dishid") + " - " + $(obj).val());
 		    orderDetails.push(
-
 		    	{"dishes_id": $(obj).data("dishid"), "orders_id" : 2, "username" : getUsername()}
 			);
 			var gerecht = getDish($(obj).data("dishid"));

@@ -167,17 +167,15 @@
 
                 <script type="text/javascript">
                 $(function () {
-
                     $('.footable').footable();                   
-
                 });
                 </script>
                 <div class="ui-field-contain">
-                    <label for="select-products-order">Kies producten : </label> 
-                    <select id="select-products-order" data-inline="true" name="select-products-order"></select>
-                    <button id="placeOrderButton" data-inline="true" >Plaatsen</button>
+                    <select id="select-products-order" name="select-products-order" data-inline="true"></select>
+                    <button id="placeOrderButton" data-inline="true">Plaatsen</button>
                      
                 </div>
+                <span>Zoeken</span>
                 <input type="text" id="table-filter" placeholer="Zoek gebruiker / snack">
                 <table class="footable metro-orange" data-filter="#filter" data-page-size="5" id="order-table-orders">
                   <thead>
@@ -201,7 +199,7 @@
                     </tr>
                   </tbody>
                 </table>
-                
+                <button id="orderDoneButton">Afronden</button>
             </div>
         </div><!-- /content -->
     </div><!-- /page -->

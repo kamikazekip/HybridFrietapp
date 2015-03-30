@@ -1,6 +1,5 @@
 var globalAuthheader = "";
 
-
 $(document).on('click','#register-btn-register', function() {	
 	handleRegister();	
 })
@@ -21,20 +20,16 @@ $(document).ready(function(){
 // Dit wordt gedaan op basis van localStorage variable 'gebruikersnaam'
 // Deze wordt geset bij login, en geunset bij logout
 function checkLogin(){
-	console.log("-- Checking Login --");
 	var gebruikersnaam = localStorage.getItem("gebruikersnaam");
 	if(gebruikersnaam === null  || globalAuthheader === null){
-		console.log("X Not logged in");
 		return false;
 	}
 	else if( gebruikersnaam.length>0 || globalAuthheader.length>0){
-		console.log("Y Logged in");
 		getAuthHeader();
 		return true;
 		
 	}
 	else{
-		console.log("X Not logged in but value is set");
 		return false;
 	}
 }
@@ -53,14 +48,12 @@ function handleRegister(){
 		alert('wachtwoorden komen niet overeen');
 	}
 	else{
-		console.log('register');
-
 		postData = {
 			username : inputUserName,
 			password : inputPassword
 		}
 		$.ajax( {
-			url : 'http://localhost:8000/users',
+			url : globalServerUrl + '/users',
 			dataType : 'json',
 			data : postData,
 			type : "Post",
@@ -77,13 +70,10 @@ function handleRegister(){
 				$('#login-text-wachtwoord').val("");
 			},
 			success : function(model) {
-			  console.log('success');
 			  $.mobile.changePage("#page-login", {transition : "slideup"});;
-
 			}
 		});
 	}	
-	
 }
 
 function login(){
@@ -99,12 +89,10 @@ function login(){
 		// Auth header is nodig bij het zenden van requests.
 		// Deze wordt gegenereerd uit het username en password
 		var authHeader = "Basic " + $.base64.encode(inputUserName + ":" + inputPassword);
-
-		console.log("Login user");
 		
 		// 
 		$.ajax( {
-			url : 'http://localhost:8000/login',
+			url : globalServerUrl + '/login',
 			dataType : 'json',
 			type : "Post",
 			beforeSend : function(xhr) {
@@ -127,9 +115,6 @@ function login(){
 				
 			},
 			success : function(model) {
-				
-				
-			  	console.log('success');
 			  	// Auth header opslaan in local storage, deze moet gebruikt worden bij requests
 			  	setAuthHeader(authHeader);
 			  	
@@ -171,5 +156,4 @@ function setAuthHeader(auth){
 	var newAuthheader = 'authHeader' + auth;
 	localStorage.setItem('authHeader' , newAuthheader);
 	globalAuthheader =newAuthheader;
-	console.log(globalAuthheader);
 }

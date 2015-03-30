@@ -1,7 +1,7 @@
 // Zorgen dat de groepen maar een maal worden ingeladen
 
 var globalDishesLoaded = false;
-
+var globalServerUrl = "https://desolate-bayou-9128.herokuapp.com";
 var globalSelectedOrder = 0;
 var globalLocation = 0;
 
@@ -46,27 +46,18 @@ var orderDetails = [
 
 // -----------------   PAGE LOADS -----------------
 
-
-
-
-
-
-
-
 $(document).ready(function(){
 	loadDishes();
 	
 	$("#placeOrderButton").on("tap", function(){
 		var scopeDish = $("#select-products-order").val();
-		console.log(scopeDish);
+
 		var scopeData = {
 			"dish" : scopeDish
 		};
-	    console.log('Selected value: ' + scopeDish );
-	    console.log(globalSelectedOrder);
 	    
 	     $.ajax( {
-			url : 'http://localhost:8000/orders/'+globalSelectedOrder+"/dish",
+			url : globalServerUrl + '/orders/'+globalSelectedOrder+"/dish",
 			dataType : 'json',
 			type : "Post",
 			data : scopeData,
@@ -147,7 +138,7 @@ $(document).on('click','.group-btn-order', function() {
 		//Groeps informatie ophalen
 		
 		$.ajax( {
-			url : 'http://localhost:8000/orders/'+globalSelectedOrder+'/dishes',
+			url : globalServerUrl + '/orders/'+globalSelectedOrder+'/dishes',
 			dataType : 'json',
 			type : "get",
 			beforeSend : function(xhr) {
@@ -165,9 +156,7 @@ $(document).on('click','.group-btn-order', function() {
 				
 			},
 			success : function(model) {
-				console.log("---------ORDEEEEEEEEEEEERS ----------");
 				orders = model;
-				console.log(model);
 				for(i = 0; i < orders.length; i++) {
 					$('#order-table-orders tbody').append('<tr><td>'+orders[i].creator +'</td><td>'+orders[i].dish+'</td></tr>');
 				}
@@ -220,11 +209,6 @@ $(document).on('click','#login-btn-login', function() {
 $(document).on('click','#main-btn-logout', function() {
 	logout();
 })
-
-
-
-
-
 
 // Een groep aanmaken
 $(document).on('click','#order-button-addProducts', function() {
