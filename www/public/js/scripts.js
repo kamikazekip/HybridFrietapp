@@ -105,11 +105,11 @@ function loadDishes(){
 // Hieron wordt bepaald of de gebruiker is ingelogd
 // Zo niet redirect naar login, Zo ja redirect naar main
 $(document).on('pagebeforeshow','#page-splash', function() {
-	if(checkLogin()){	
-		$.mobile.pageContainer.pagecontainer('change', "#page-main", {transition : "pop"});	
+	if(checkLogin()){
+		$.mobile.changePage("#page-main", {transition : "pop"});	
 	}
 	else{
-		$.mobile.pageContainer.pagecontainer('change', "#page-login", {transition : "pop"});	
+		$.mobile.changePage("#page-login", {transition : "pop"});	
 	}
 })
 
