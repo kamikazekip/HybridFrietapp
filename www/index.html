@@ -50,6 +50,54 @@
             console.log(update );
         });
     </script>
+    
+    <script>
+        var socket = io.connect( "http://localhost:8080");
+        socket.on("update", function(update) {
+
+            console.log("Update recived from NODE JA TOCH !" );
+            console.log(update );
+        });
+
+        var app = {
+            // Application Constructor
+            initialize: function() {
+                this.bindEvents();
+            },
+            // Bind Event Listeners
+            //
+            // Bind any events that are required on startup. Common events are:
+            // 'load', 'deviceready', 'offline', and 'online'.
+            bindEvents: function() {
+                document.addEventListener('deviceready', this.onDeviceReady, false);
+            },
+            // deviceready Event Handler
+            //
+            // The scope of 'this' is the event. In order to call the 'receivedEvent'
+            // function, we must explicitly call 'app.receivedEvent(...);'
+            onDeviceReady: function() {
+                app.receivedEvent('deviceready');
+            },
+            // Update DOM on a Received Event
+            receivedEvent: function(id) {
+                var parentElement = document.getElementById(id);
+                var listeningElement = parentElement.querySelector('.listening');
+                var receivedElement = parentElement.querySelector('.received');
+
+                listeningElement.setAttribute('style', 'display:none;');
+                receivedElement.setAttribute('style', 'display:block;');
+
+                console.log('Received Event: ' + id);
+                if(checkLogin()){   
+                    $.mobile.pageContainer.pagecontainer('change', "#page-main", {transition : "pop"}); 
+                }
+                else{
+                    $.mobile.pageContainer.pagecontainer('change', "#page-login", {transition : "pop"});    
+                }
+            }
+        };
+        app.initialize();
+    </script>
 
     <div data-role="page" data-theme="a" id="page-splash">
 
