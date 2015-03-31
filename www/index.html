@@ -42,14 +42,7 @@
     <script src="public/js/groups.js"></script>
     <script src="public/js/orders.js"></script>
 
-    <script>
-        var socket = io.connect( "http://localhost:8080");
-        socket.on("update", function(update) {
-
-            console.log("Update recived from NODE JA TOCH !" );
-            console.log(update );
-        });
-    </script>
+  
 
     <script>
        
@@ -89,17 +82,7 @@
         app.initialize();
     </script>
 
-    <div data-role="page" data-theme="a" id="page-splash">
-
-        <div data-role="header">
-            <h1>Friet App Splash</h1>
-        </div><!-- /header -->
-
-        <div role="main" class="ui-content">
-        </div><!-- /content -->
-        
-
-    </div><!-- /page -->
+   
 
     <!-- Start of first page -->
     <div data-role="page" id="page-login">
