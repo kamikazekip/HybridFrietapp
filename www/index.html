@@ -50,7 +50,7 @@
             console.log(update );
         });
     </script>
-    
+
     <script>
         var socket = io.connect( "http://localhost:8080");
         socket.on("update", function(update) {
@@ -88,12 +88,14 @@
                 receivedElement.setAttribute('style', 'display:block;');
 
                 console.log('Received Event: ' + id);
-                if(checkLogin()){   
+                $.mobile.pageContainer.pagecontainer('change', "#page-main", {transition : "pop"}); 
+                /*if(checkLogin()){   
                     $.mobile.pageContainer.pagecontainer('change', "#page-main", {transition : "pop"}); 
                 }
                 else{
                     $.mobile.pageContainer.pagecontainer('change', "#page-login", {transition : "pop"});    
                 }
+                */
             }
         };
         app.initialize();
